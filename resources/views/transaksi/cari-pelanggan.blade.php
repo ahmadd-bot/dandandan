@@ -48,13 +48,13 @@
         } = item
 
         const btn = `<button type="button" 
-        class="btn btn-xs btn-success" onclick="addPelanggan(${id}')">
+        class="btn btn-xs btn-success" onclick="addPelanggan(${id})">
             Pilih
         </button>`;
 
         const row = `<tr>
             <td>${nama}</td>
-            <td class="text-right>${btn}</td>
+            <td class="text-right">${btn}</td>
         </tr>`;
         $('#resultPelanggan').append(row)
     }

@@ -16,6 +16,10 @@ return new class extends Migration
             $table->foreignId('kategori_id')->constrained()->cascadeOnDelete()->noActionOnUpdate;
             $table->string('kode_produk')->unique();
             $table->string('nama_produk');
+            // diskon
+            $table->unsignedInteger('harga_produk');
+            $table->unsignedInteger('diskon')->default(0);
+            // diskon
             $table->unsignedInteger('harga');
             $table->integer('stok')->default(0);
         });

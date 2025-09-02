@@ -10,6 +10,8 @@
 
                 <x-nav-item title="Transaksi" icon="fas fa-cash-register"
                     :routes="['transaksi.index','transaksi.create','transaksi.show']" />
+
+                <x-nav-item title="Laporan" icon="fas fa-print" :routes="['laporan.index']" />
                 
                 <x-nav-item title="Produk" icon="fas fa-box-open"
                     :routes="['produk.index','produk.create','produk.edit']" />

@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <div class="col -6 offset-6">
+        <div class="col-6 offset-6">
             <hr class="mt-0">
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -127,7 +127,8 @@
             title,
             quantity,
             price,
-            total_price
+            total_price,
+            options //diskon
         } = item;
         
         let btn = `<button type="button" class="btn btn-xs btn-success mr-2" onclick="ePut('${hash}',1)">
@@ -141,11 +142,14 @@
         btn += `<button type="button" class="btn btn-xs btn-danger" onclick="eDel('${hash}')">
             <i class="fas fa-times"></i>
             </button>`;
-
+        //diskon
+        const {diskon, harga_produk}=options;
+        const nilai_diskon = diskon ? `(-${diskon}%)`:'';
+        //diskon
         const row = `<tr>
             <td>${title}</td>
             <td>${quantity}</td>
-            <td>${rupiah(price)}</td>
+            <td>${rupiah(harga_produk)}${nilai_diskon}</td>
             <td>${rupiah(total_price)}</td>
             <td>${ btn }</td>
             </tr>`;

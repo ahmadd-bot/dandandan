@@ -46,7 +46,10 @@
                         <th>Kode</th>
                         <th>Nama Produk</th>
                         <th>Kategori</th>
-                        <th>Harga</th>
+                        <!-- diskon -->
+                        <th>Harga Produk</th>
+                        <th>Diskon</th>
+                        <th>Harga Jual</th>
                         <th>Stok</th>
                     </tr>
                 </thead>
@@ -56,7 +59,12 @@
                                         <td>{{ $produks->firstItem() + $key }}</td>
                                         <td>{{ $produk->kode_produk }}</td>
                                         <td>{{ $produk->nama_produk }}</td>
+                                        <td>{{ $produk->nama_kategori }}</td>
+                                        <!-- diskon -->
+                                        <td>{{ $produk->harga_produk }}</td>
+                                        <td>{{ $produk->diskon }}%</td>
                                         <td>{{ $produk->harga }}</td>
+                                        <!-- diskon -->
                                         <td>{{ $produk->stok }}</td>
                                         <td class="text-right">
                                             <a href="{{ route('produk.edit', [

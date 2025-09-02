@@ -32,7 +32,12 @@ public function store(Request $request) {
         'id' => $produk->id,
         'title' => $produk->nama_produk,
         'quantity' => 1,
-        'price' => $produk->harga
+        'price' => $produk->harga,
+        'options'=>[
+            'diskon'=>$produk->diskon,
+            'harga_produk'=>$produk->harga_produk,
+        ]
+
     ]);
     return response()->json(['message' => 'Berhasil ditambahkan.']);
 }

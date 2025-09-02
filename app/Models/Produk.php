@@ -16,6 +16,9 @@ class Produk extends Model
         'kode_produk',
         'nama_produk',
         'harga',
-        'stok'
+        'stok',
+        // diskon
+        'harga_produk',
+        'diskon'
     ];
 }

@@ -10,6 +10,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\DashboardController; 
 use App\Models\Kategori;
 
 /*
@@ -41,12 +43,16 @@ Route::middleware('auth')->group(function() {
         ->name('transaksi.pelanggan');
     Route::get('transaksi/{transaksi}/cetak', [TransaksiController::class, 'cetak'])
         ->name('transaksi.cetak');
-    Route::get('transaksi/pelanggan', [TransaksiController::class, 'addPelanggan'])
+    Route::post('transaksi/pelanggan', [TransaksiController::class, 'addPelanggan'])
         ->name('transaksi.pelanggan.add');
     Route::resource('transaksi', TransaksiController::class)->except('edit', 'update');
     Route::get('cart/clear', [CartController::class, 'clear'])->name('cart.clear');
     Route::resource('cart', CartController::class)->except('create', 'show', 'edit')
         ->parameters(['cart' => 'hash']);
+    Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('laporan/harian', [LaporanController::class, 'harian'])->name('laporan.harian');
+    Route::get('laporan/bulanan', [LaporanController::class, 'bulanan'])->name('laporan.bulanan');
+    Route::get('/', [DashboardController::class, 'index'])->name('home')->middleware('auth');
 });
 
 Route::view('login', 'auth.login')->name('login')->middleware('guest');

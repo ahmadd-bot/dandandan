@@ -48,13 +48,14 @@
         <hr>
 
         <table>
-            @foreach
-            <tr>
-                <td>{{ $row->jumlah }} {{ $row-nama_produk }} x {{ $row->harga_produk }}</td>
-                <td class="right">{{ number_format($row->subtotal, 0, ',', '.') }}</td>
-            </tr>
+            @foreach($detilPenjualan as $row)
+                <tr>
+                    <td>{{ $row->jumlah }} {{ $row->nama_produk }} x {{ $row->harga_produk }}</td>
+                    <td class="right">{{ number_format($row->subtotal, 0, ',', '.') }}</td>
+                </tr>
             @endforeach
         </table>
+
 
         <hr>
 

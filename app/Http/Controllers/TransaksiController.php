@@ -65,7 +65,7 @@ class TransaksiController extends Controller
             'total' => $total,
             'tunai' => $request->cash,
             'kembalian' => $kembalian,
-            'pajak' => $cartDetails->get('tax_amout'),
+            'pajak' => $cartDetails->get('tax_amount'),
             'subtotal' => $cartDetails->get('subtotal')
         ]);
 

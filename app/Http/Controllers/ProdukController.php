@@ -60,8 +60,15 @@ class ProdukController extends Controller
             'nama_produk' => ['required', 'max:150'],
             'harga' => ['required', 'numeric'],
             'kategori_id' => ['required', 'exists:kategoris,id'],
+            'diskon'=>['required', 'between:0,100'], //diskon
         ]);
-
+        //dikon
+        $harga=$request->harga-($request->harga * $request->diskon / 100);
+        $request->merge([
+            'harga_produk'=>$request->harga,
+            'harga'=>$harga,
+        ]);
+        //diskon
         Produk::create($request->all());
 
         return redirect()->route('produk.index')->with('store', 'success');
@@ -104,6 +111,13 @@ class ProdukController extends Controller
             'nama_produk' => ['required', 'max:150'],
             'harga' => ['required', 'numeric'],
             'kategori_id' => ['required', 'exists:kategoris,id'],
+            'diskon'=>['required', 'between:0,100'], //diskon
+        ]);
+
+        $harga=$request->harga-($request->harga * $request->diskon/100);
+        $request->merge([
+            'harga_produk'=>$request->harga,
+            'harga'=>$harga,
         ]);
 
         $produk->update($request->all());

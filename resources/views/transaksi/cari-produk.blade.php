@@ -55,7 +55,7 @@
 
         const row = `<tr>
             <td>${nama_produk}</td>
-            <td class="text-right>${btn}</td>
+            <td class="text-right">${btn}</td>
         </tr>`;
         $('#resultProduk').append(row)
     }
