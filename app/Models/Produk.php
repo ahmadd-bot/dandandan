@@ -12,13 +12,13 @@ class Produk extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'kategori_id',
-        'kode_produk',
-        'nama_produk',
-        'harga',
-        'stok',
-        // diskon
-        'harga_produk',
-        'diskon'
+    'kategori_id',
+    'kode_produk',
+    'nama_produk',
+    'harga_modal',
+    'harga_produk',
+    'diskon',
+    'harga',
+    'stok',
     ];
 }

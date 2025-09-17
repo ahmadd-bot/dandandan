@@ -42,12 +42,24 @@ class PelangganController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => ['required', 'max:100'],
+            'nama' => [
+                'required',
+                'max:100',
+                'regex:/^(?![0-9]+$).+$/'
+            ],
             'alamat' => ['nullable', 'max:500'],
             'nomor_tlp' => ['nullable', 'max:14']
+        ], [
+            'nama.required' => 'Nama pelanggan wajib diisi.',
+            'nama.max' => 'Nama pelanggan maksimal 100 karakter.',
+            'nama.regex' => 'Nama pelanggan tidak boleh hanya berupa angka.',
         ]);
 
-        Pelanggan::create($request->all());
+        Pelanggan::create([
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'nomor_tlp' => $request->nomor_tlp,
+        ]);
 
         return redirect()->route('pelanggan.index')->with('store', 'success');
     }
@@ -76,12 +88,24 @@ class PelangganController extends Controller
     public function update(Request $request, Pelanggan $pelanggan)
     {
         $request->validate([
-            'nama' => ['required', 'max:100'],
+            'nama' => [
+                'required',
+                'max:100',
+                'regex:/^(?![0-9]+$).+$/'
+            ],
             'alamat' => ['nullable', 'max:500'],
             'nomor_tlp' => ['nullable', 'max:14']
+        ], [
+            'nama.required' => 'Nama pelanggan wajib diisi.',
+            'nama.max' => 'Nama pelanggan maksimal 100 karakter.',
+            'nama.regex' => 'Nama pelanggan tidak boleh hanya berupa angka.',
         ]);
 
-        $pelanggan->update($request->all());
+        $pelanggan->update([
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'nomor_tlp' => $request->nomor_tlp,
+        ]);
 
         return redirect()->route('pelanggan.index')->with('update', 'success');
     }

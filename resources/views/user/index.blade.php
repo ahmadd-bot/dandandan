@@ -4,21 +4,29 @@
     User
 @endsection
 @section('content')
-    @if (session('store') == 'success')
-        <x-alert type="success">
-            <strong>Berhasil dibuat!</strong> User berhasil dibuat.
-        </x-alert>
-    @endif
-    @if (session('update') == 'success')
-        <x-alert type="success">
-            <strong>Berhasil diupdate!</strong> User berhasil diupdate.
-        </x-alert>
-    @endif
-    @if (session('destroy') == 'success')
-        <x-alert type="success">
-            <strong>Berhasil dihapus!</strong> User berhasil dihapus.
-        </x-alert>
-    @endif
+   @if (session('store') == 'success')
+<x-alert type="success">
+    <strong>Berhasil dibuat!</strong> User berhasil dibuat.
+</x-alert>
+@endif
+
+@if (session('update') == 'success')
+<x-alert type="success">
+    <strong>Berhasil diupdate!</strong> User berhasil diupdate.
+</x-alert>
+@endif
+
+@if (session('destroy') == 'success')
+<x-alert type="success">
+    <strong>Berhasil dihapus!</strong> User berhasil dihapus.
+</x-alert>
+@endif
+
+@if (session('error'))
+<x-alert type="danger">
+    <strong>Gagal!</strong> {{ session('error') }}
+</x-alert>
+@endif
     <div class="card card-orange card-outline">
         <div class="card-header form-inline">
             <a href="{{ route('user.create') }}" class="btn btn-primary">
@@ -27,7 +35,7 @@
             <form action="?" method="get" class="ml-auto">
                 <div class="input-group">
                     <input type="text" class="form-control" name="search" value="{{ request()->search }}"
-                        placeholder="Nama, Username">
+                        placeholder="Nama, Username, Role">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-search"></i>
@@ -44,6 +52,7 @@
                         <th>#</th>
                         <th>Nama</th>
                         <th>Username</th>
+                        <th>Role</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -53,6 +62,7 @@
                             <td>{{ $users->firstItem() + $key }}</td>
                             <td>{{ $user->nama }}</td>
                             <td>{{ $user->username }}</td>
+                            <td>{{ $user->role }}</td>
                             <td class="text-right">
                                 <a href="{{ route('user.edit', ['user' => $user->id]) }}"
                                     class="btn btn-xs text-success p-0 mr-1">

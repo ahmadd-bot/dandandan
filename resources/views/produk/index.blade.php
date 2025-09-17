@@ -19,7 +19,17 @@
             <strong>Berhasil dihapus!</strong> Produk berhasil dihapus.
         </x-alert>
     @endif
-    
+    @if ($stokMenipis->count() > 0)
+    <x-alert type="warning">
+        ⚠️ Ada {{ $stokMenipis->count() }} produk dengan stok menipis:
+        <ul class="mb-0">
+            @foreach ($stokMenipis as $p)
+                <li>{{ $p->nama_produk }} (Stok: {{ $p->stok }})</li>
+            @endforeach
+        </ul>
+    </x-alert>
+    @endif
+
     <div class="card card-orange card-outline">
         <div class="card-header form-inline">
             <a href="{{ route('produk.create') }}" class="btn btn-primary">
@@ -46,40 +56,40 @@
                         <th>Kode</th>
                         <th>Nama Produk</th>
                         <th>Kategori</th>
+                        <th>Harga Modal</th>
                         <!-- diskon -->
                         <th>Harga Produk</th>
                         <th>Diskon</th>
                         <th>Harga Jual</th>
                         <th>Stok</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($produks as $key => $produk)
-                                    <tr>
-                                        <td>{{ $produks->firstItem() + $key }}</td>
-                                        <td>{{ $produk->kode_produk }}</td>
-                                        <td>{{ $produk->nama_produk }}</td>
-                                        <td>{{ $produk->nama_kategori }}</td>
-                                        <!-- diskon -->
-                                        <td>{{ $produk->harga_produk }}</td>
-                                        <td>{{ $produk->diskon }}%</td>
-                                        <td>{{ $produk->harga }}</td>
-                                        <!-- diskon -->
-                                        <td>{{ $produk->stok }}</td>
-                                        <td class="text-right">
-                                            <a href="{{ route('produk.edit', [
-                            'produk' => $produk->id,
-                        ]) }}" class="btn btn-xs text-success p-0 mr-1">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <button type="button" data-toggle="modal" data-target="#modalDelete" data-url="{{ route('produk.destroy', [
-                            'produk' => $produk->id,
-                        ]) }}" class="btn btn-xs text-danger p-0 btn-delete">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                    @endforeach
+    <tr @if($produk->stok <= 20) class="table-danger" @endif>
+        <td>{{ $produks->firstItem() + $key }}</td>
+        <td>{{ $produk->kode_produk }}</td>
+        <td>{{ $produk->nama_produk }}</td>
+        <td>{{ $produk->nama_kategori }}</td>
+        <td>{{ number_format($produk->harga_modal, 0, ',', '.') }}</td>
+        <td>{{ number_format($produk->harga_produk, 0, ',', '.') }}</td>
+        <td>{{ $produk->diskon }}%</td>
+        <td>{{ number_format($produk->harga, 0, ',', '.') }}</td>
+        <td>{{ $produk->stok }}</td>
+        <td class="text-right">
+            <a href="{{ route('produk.edit', ['produk' => $produk->id]) }}" class="btn btn-xs text-success p-0 mr-1">
+                <i class="fas fa-edit"></i>
+            </a>
+            <button type="button" data-toggle="modal" data-target="#modalDelete"
+                data-url="{{ route('produk.destroy', ['produk' => $produk->id]) }}"
+                class="btn btn-xs text-danger p-0 btn-delete">
+                <i class="fas fa-trash"></i>
+            </button>
+        </td>
+    </tr>
+@endforeach
+
                 </tbody>
             </table>
         </div>

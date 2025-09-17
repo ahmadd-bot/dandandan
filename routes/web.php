@@ -25,15 +25,16 @@ use App\Models\Kategori;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home')->middleware('auth');
+Route::get('/', [DashboardController::class, 'index'])
+    ->name('home')
+    ->middleware('auth');
+
 
 Route::middleware('auth')->group(function() {
     Route::singleton('profile',ProfileController::class);
     Route::resource('user',UserControler::class)->middleware('can:admin');
     Route::resource('pelanggan',PelangganController::class);
-    Route::resource('kategori',KategoriController::class)->middleware('can:admin');
+    Route::resource('kategori',KategoriController::class);
     Route::resource('produk',ProdukController::class);
     Route::get('stok/produk',[StokController::class,'produk'])->name('stok.produk');
     Route::resource('stok',StokController::class)->only('index', 'create', 'store', 'destroy');
@@ -49,10 +50,20 @@ Route::middleware('auth')->group(function() {
     Route::get('cart/clear', [CartController::class, 'clear'])->name('cart.clear');
     Route::resource('cart', CartController::class)->except('create', 'show', 'edit')
         ->parameters(['cart' => 'hash']);
+    // Di web.php atau routes file
+    Route::delete('/transaksi/pelanggan', [TransaksiController::class, 'removePelanggan']); 
     Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
     Route::get('laporan/harian', [LaporanController::class, 'harian'])->name('laporan.harian');
+    Route::get('/laporan/mingguan', [LaporanController::class, 'mingguan'])->name('laporan.mingguan');
     Route::get('laporan/bulanan', [LaporanController::class, 'bulanan'])->name('laporan.bulanan');
-    Route::get('/', [DashboardController::class, 'index'])->name('home')->middleware('auth');
+    // Tambahkan route ini ke dalam file web.php
+
+// Route laporan keuntungan
+Route::get('/laporan/keuntungan/harian', [LaporanController::class, 'keuntunganHarian'])
+    ->name('laporan.keuntungan.harian');
+
+Route::get('/laporan/keuntungan/bulanan', [LaporanController::class, 'keuntunganBulanan'])
+    ->name('laporan.keuntungan.bulanan');
 });
 
 Route::view('login', 'auth.login')->name('login')->middleware('guest');

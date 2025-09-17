@@ -24,12 +24,14 @@ class ProdukController extends Controller
             })
             ->paginate();
 
-        if ($search) $produks->appends(['search' => $search]);
+        if ($search) {
+            $produks->appends(['search' => $search]);
+        }
 
-        return view('produk.index', [
-            'produks' => $produks
-        ]);
+        // cari produk dengan stok < 20
+        $stokMenipis = Produk::where('stok', '<=', 20)->get();
 
+        return view('produk.index', compact('produks', 'stokMenipis'));
     }
 
     /**
@@ -58,18 +60,25 @@ class ProdukController extends Controller
         $request->validate([
             'kode_produk' => ['required', 'max:250', 'unique:produks'],
             'nama_produk' => ['required', 'max:150'],
+            'harga_modal' => ['required', 'numeric'],
             'harga' => ['required', 'numeric'],
             'kategori_id' => ['required', 'exists:kategoris,id'],
-            'diskon'=>['required', 'between:0,100'], //diskon
+            'diskon' => ['required', 'between:0,100'],
         ]);
-        //dikon
-        $harga=$request->harga-($request->harga * $request->diskon / 100);
-        $request->merge([
-            'harga_produk'=>$request->harga,
-            'harga'=>$harga,
+
+        // hitung harga setelah diskon
+        $hargaSetelahDiskon = $request->harga - ($request->harga * $request->diskon / 100);
+
+        Produk::create([
+            'kode_produk' => $request->kode_produk,
+            'nama_produk' => $request->nama_produk,
+            'harga_modal' => $request->harga_modal,
+            'harga_produk' => $request->harga,
+            'diskon' => $request->diskon,
+            'harga' => $hargaSetelahDiskon,
+            'kategori_id' => $request->kategori_id,
+            'stok' => 0, // Set stok awal 0, tidak bisa diinput dari form
         ]);
-        //diskon
-        Produk::create($request->all());
 
         return redirect()->route('produk.index')->with('store', 'success');
     }
@@ -109,20 +118,27 @@ class ProdukController extends Controller
         $request->validate([
             'kode_produk' => ['required', 'max:250', 'unique:produks,kode_produk,' . $produk->id],
             'nama_produk' => ['required', 'max:150'],
+            'harga_modal' => ['required', 'numeric'],
             'harga' => ['required', 'numeric'],
             'kategori_id' => ['required', 'exists:kategoris,id'],
-            'diskon'=>['required', 'between:0,100'], //diskon
+            'diskon' => ['required', 'between:0,100'],
         ]);
 
-        $harga=$request->harga-($request->harga * $request->diskon/100);
-        $request->merge([
-            'harga_produk'=>$request->harga,
-            'harga'=>$harga,
+        // hitung harga setelah diskon
+        $hargaSetelahDiskon = $request->harga - ($request->harga * $request->diskon / 100);
+
+        $produk->update([
+            'kode_produk' => $request->kode_produk,
+            'nama_produk' => $request->nama_produk,
+            'harga_modal' => $request->harga_modal,
+            'harga_produk' => $request->harga,
+            'diskon' => $request->diskon,
+            'harga' => $hargaSetelahDiskon,
+            'kategori_id' => $request->kategori_id,
+            // stok tidak diupdate dari form, tetap menggunakan stok lama
         ]);
 
-        $produk->update($request->all());
-
-        return redirect()->route ('produk.index')->with('update', 'success');
+        return redirect()->route('produk.index')->with('update', 'success');
     }
 
     /**

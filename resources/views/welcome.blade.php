@@ -8,9 +8,9 @@
     @can('admin')
         <x-box title="User" icon="fas fa-user-tie" background="bg-danger"
             :route="route('user.index')" :jumlah="$user->jumlah" />
+    @endcan
         <x-box title="Kategori" icon="fas fa-list" background="bg-warning"
             :route="route('kategori.index')" :jumlah="$kategori->jumlah" />
-    @endcan
     <x-box title="Pelanggan" icon="fas fa-users" background="bg-primary"
         :route="route('pelanggan.index')" :jumlah="$pelanggan->jumlah" />
     <x-box title="Produk" icon="fas fa-box-open" background="bg-success"

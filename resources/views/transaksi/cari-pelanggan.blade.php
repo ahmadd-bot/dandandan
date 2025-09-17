@@ -8,6 +8,14 @@
         </div>
     </div>
 </form>
+
+<!-- Tambah tombol untuk transaksi umum -->
+<div class="mt-2">
+    <button type="button" class="btn btn-warning btn-sm btn-block" onclick="setPelangganUmum()">
+        <i class="fas fa-user mr-2"></i>Transaksi Umum (Tanpa Pelanggan)
+    </button>
+</div>
+
 <table class="table table-sm mt-3">
     <thead>
         <tr>
@@ -66,6 +74,21 @@
     function(response) {
         fetchCart();
     }, "json");
+    }
+
+    // Fungsi untuk set transaksi umum
+    function setPelangganUmum() {
+        // Hapus pelanggan dari cart
+        $.ajax({
+            type: "DELETE",
+            url: "/transaksi/pelanggan",
+            dataType: "json",
+            success: function(response) {
+                fetchCart();
+                $('#searchPelanggan').val('');
+                $('#resultPelanggan').html('');
+            }
+        });
     }
 </script>
 @endpush

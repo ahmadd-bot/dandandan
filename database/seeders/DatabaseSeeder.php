@@ -59,6 +59,7 @@ class DatabaseSeeder extends Seeder
             'nama_produk'=>'Chiki Taro',
             'harga'=>5000,
             'harga_produk'=>5000, //diskon
+            'harga_modal'=>4000,
         ]);
 
         \App\Models\Produk::create([
@@ -66,7 +67,9 @@ class DatabaseSeeder extends Seeder
             'kode_produk'=>'1002',
             'nama_produk'=>'Le Minerale',
             'harga'=>3500,
-            'harga_produk'=>3500 //diskon
+            'harga_produk'=>3500, //diskon
+            'harga_modal'=>2000,
+
         ]);
 
         \App\Models\Stok::create([

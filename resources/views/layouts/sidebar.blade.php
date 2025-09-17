@@ -19,10 +19,8 @@
                 <x-nav-item title="Stok" icon="fas fa-pallet"
                     :routes="['stok.index','stok.create']" />
                     
-                @can('admin')
                 <x-nav-item title="Kategori" icon="fas fa-list"
                 :routes="['kategori.index','kategori.create','kategori.edit']" />
-                @endcan
                 
                 <x-nav-item title="Pelanggan" icon="fas fa-users"
                 :routes="['pelanggan.index','pelanggan.create','pelanggan.edit']" />

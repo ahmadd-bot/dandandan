@@ -32,7 +32,7 @@
         }
     </style>
 </head>
-<body onload="javacsript:window.print()">
+<body onload="javascript:window.print()">
     <div class="invoice">
         <h3 class="center">{{ config('app.name') }}</h3>
         <p class="center">
@@ -41,8 +41,8 @@
         </p>
         <hr>
         <p>
-            Kode Transaksi : {{ $penjualan->kode }} <br>
-            Tanggal : {{ date('d//m/Y H:i:s', strtotime($penjualan->tanggal)) }} <br>
+            Kode Transaksi : {{ $penjualan->nomor_transaksi }} <br>
+            Tanggal : {{ date('d/m/Y H:i:s', strtotime($penjualan->tanggal)) }} <br>
             Kasir : {{ $user->nama }}
         </p>
         <hr>
@@ -56,7 +56,6 @@
             @endforeach
         </table>
 
-
         <hr>
 
         <p class="right">
@@ -64,11 +63,10 @@
             Pajak PPN(10%) : {{ number_format($penjualan->pajak, 0, ',', '.') }} <br>
             Total : {{ number_format($penjualan->total, 0, ',', '.') }} <br>
             Tunai : {{ number_format($penjualan->tunai, 0, ',', '.') }} <br>
-            kembalian : {{ number_format($penjualan->kembalian, 0, ',', '.') }} <br>
+            Kembalian : {{ number_format($penjualan->kembalian, 0, ',', '.') }} <br>
         </p>
 
         <h3 class="center">Terima Kasih</h3>
     </div>
 </body>
-
 </html>

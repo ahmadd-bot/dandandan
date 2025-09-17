@@ -95,7 +95,7 @@
         $('#formSearch').submit(function(e) {
             e.preventDefault();
             let search = $(this).find('#search').val();
-            if (search.length >= 3) {
+            if (search.length) {
             fetchProduk(search)
             }
         });

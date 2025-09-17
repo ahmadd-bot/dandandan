@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('produks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kategori_id')->constrained()->cascadeOnDelete()->noActionOnUpdate;
+            $table->foreignId('kategori_id')->constrained()->cascadeOnDelete()->noActionOnUpdate();
             $table->string('kode_produk')->unique();
             $table->string('nama_produk');
             // diskon

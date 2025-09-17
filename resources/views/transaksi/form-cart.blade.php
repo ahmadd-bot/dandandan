@@ -14,14 +14,15 @@
             <div class="col">
                 <label>Nama Pelanggan</label>
                 <input type="text" id="namaPelanggan" 
-                class="form-control @error('pelanggan_id') is-invalid @enderror" disabled>
+                class="form-control @error('pelanggan_id') is-invalid @enderror" 
+                placeholder="Umum (Opsional)" disabled>
                 @error('pelanggan_id')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
 
-                <input type="hidden" name="pelanggan_id" id="pelangganId">
+                <input type="hidden" name="pelanggan_id" id="pelangganId" value="">
             </div>
             <div class="col">
                 <label>Nama Kasir</label>
@@ -90,6 +91,8 @@
 <script>
     $(function() {
         fetchCart();
+        // Set default nama pelanggan
+        $('#namaPelanggan').val('Umum');
     });
 
     function fetchCart() {
@@ -112,10 +115,16 @@
                 for  (const property in items) {
                     addRow(items[property])
                 }
-                if (!Array.isArray(extra_info)) {
+                
+                // Jika ada pelanggan terpilih, tampilkan namanya
+                if (!Array.isArray(extra_info) && extra_info.pelanggan) {
                     const { id, nama } = extra_info.pelanggan
                     $('#namaPelanggan').val(nama);
                     $('#pelangganId').val(id);
+                } else {
+                    // Jika tidak ada pelanggan, set ke "Umum"
+                    $('#namaPelanggan').val('Umum');
+                    $('#pelangganId').val('');
                 }
             }
         );
@@ -135,7 +144,7 @@
             <i class="fas fa-plus"></i>
             </button>`;
 
-        btn += `<button type="button" class="btn btn-xs btn-success mr-2" onclick="ePut('${hash}',-1)">
+        btn += `<button type="button" class="btn btn-xs btn-primary mr-2" onclick="ePut('${hash}',-1)">
             <i class="fas fa-minus"></i>
             </button>`;
 

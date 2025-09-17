@@ -40,16 +40,27 @@ class KategoriController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'nama_kategori' => ['required', 'max:100'],
-        ]);
+{
+    $request->validate([
+        'nama_kategori' => [
+            'required',
+            'max:100',
+            'regex:/^(?![0-9]+$).+$/',
+            'unique:kategoris,nama_kategori'
+        ],
+    ], [
+        'nama_kategori.required' => 'Nama kategori wajib diisi.',
+        'nama_kategori.max' => 'Nama kategori maksimal 100 karakter.',
+        'nama_kategori.regex' => 'Nama kategori tidak boleh hanya berupa angka.',
+        'nama_kategori.unique' => 'Nama kategori sudah terdaftar.',
+    ]);
 
-        Kategori::create($request->all());
+    Kategori::create([
+        'nama_kategori' => $request->nama_kategori,
+    ]);
 
-        return redirect()->route('kategori.index')->with('store', 'success');
-    }
-
+    return redirect()->route('kategori.index')->with('store', 'success');
+}
     /**
      * Display the specified resource.
      */
@@ -71,16 +82,29 @@ class KategoriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pelanggan $pelanggan)
-    {
-        $request->validate([
-            'nama_kategori' => ['required', 'max:100'],
-        ]);
+    public function update(Request $request, Kategori $kategori)
+{
+    $request->validate([
+        'nama_kategori' => [
+            'required',
+            'max:100',
+            'regex:/^(?![0-9]+$).+$/',
+            'unique:kategoris,nama_kategori,' . $kategori->id
+        ],
+    ], [
+        'nama_kategori.required' => 'Nama kategori wajib diisi.',
+        'nama_kategori.max' => 'Nama kategori maksimal 100 karakter.',
+        'nama_kategori.regex' => 'Nama kategori tidak boleh hanya berupa angka.',
+        'nama_kategori.unique' => 'Nama kategori sudah terdaftar.',
+    ]);
 
-        $pelanggan->update($request->all());
+    $kategori->update([
+        'nama_kategori' => $request->nama_kategori,
+    ]);
 
-        return redirect()->route ('pelanggan.index')->with('update', 'success');
-    }
+    return redirect()->route('kategori.index')->with('update', 'success');
+}
+
 
     /**
      * Remove the specified resource from storage.
